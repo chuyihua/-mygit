@@ -1,0 +1,103 @@
+{
+  "mall" : {
+    "mappings" : {
+      "product" : {
+        "dynamic" : "strict",
+        "_all" : {
+          "enabled" : false
+        },
+        "properties" : {
+          "address" : {
+            "type" : "string",
+            "index" : "no"
+          },
+          "bossno" : {
+            "type" : "string",
+            "index" : "no"
+          },
+          "brandid" : {
+            "type" : "string",
+            "index" : "no"
+          },
+          "citycode" : {
+            "type" : "string",
+            "index" : "not_analyzed"
+          },
+          "createtime" : {
+            "type" : "string",
+            "index" : "no"
+          },
+          "districtname" : {
+            "type" : "string",
+            "index" : "no"
+          },
+          "entertime" : {
+            "type" : "string",
+            "index" : "no"
+          },
+          "fullname" : {
+            "type" : "string",
+            "index" : "no"
+          },
+          "groupid" : {
+            "type" : "string",
+            "index" : "no"
+          },
+          "listimage" : {
+            "type" : "string",
+            "index" : "no"
+          },
+          "name" : {
+            "type" : "string",
+            "analyzer": "ik_max_word",
+            "search_analyzer": "ik_max_word"
+          },
+          "parentname" : {
+            "type" : "string",
+            "index" : "no"
+          },
+          "phone" : {
+            "type" : "string",
+            "index" : "no"
+          },
+          "productid" : {
+            "type" : "string",
+            "index" : "not_analyzed"
+          },
+          "productsystem" : {
+            "type" : "string",
+            "index" : "no"
+          },
+          "protypeid" : {
+            "type" : "string",
+            "index" : "no"
+          },
+          "simplename" : {
+            "type" : "string",
+            "index" : "no"
+          },
+          "spare" : {
+            "type" : "string",
+            "index" : "no"
+          },
+          "state" : {
+            "type" : "string",
+            "index" : "no"
+          },
+          "suppliergrade" : {
+            "type" : "string",
+            "index" : "no"
+          },
+          "supplierdid" : {
+            "type" : "string",
+            "index" : "not_analyzed"
+          },
+          "updownflag" : {
+            "type" : "string",
+            "index" : "no"
+          }
+        }
+      }
+    }
+  }
+}

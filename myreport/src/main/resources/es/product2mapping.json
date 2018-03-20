@@ -1,0 +1,59 @@
+{
+  "shop" : {
+    "mappings" : {
+      "product" : {
+        "dynamic" : "strict",
+        "_all" : {
+          "enabled" : false
+        },
+        "properties" : {
+          "product_id" : {
+            "type" : "string",
+            "index" : "not_analyzed"
+          },
+          "brand_id" : {
+            "type" : "string",
+            "index" : "not_analyzed"
+          },
+          "name" : {
+            "type" : "string",
+            "analyzer": "ik_max_word",
+            "search_analyzer": "ik_max_word"
+          },
+          "market_price" : {
+            "type" : "string",
+            "index" : "not_analyzed"
+          },
+          "updown_flag" : {
+            "type" : "string",
+            "index" : "not_analyzed"
+          },
+          "max_image" : {
+            "type" : "string",
+            "index" : "no"
+          },
+          "os" : {
+            "type" : "string",
+            "index" : "not_analyzed"
+          },
+          "list_image" : {
+            "type" : "string",
+            "index" : "no"
+          },
+          "supplierid" : {
+            "type" : "string",
+            "index" : "not_analyzed"
+          },
+          "screen_size" : {
+            "type" : "string",
+            "index" : "not_analyzed"
+          },
+          "network_type" : {
+            "type" : "string",
+            "index" : "not_analyzed"
+          }
+        }
+      }
+    }
+  }
+}

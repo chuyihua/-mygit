@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd    
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd    
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd    
+	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd 
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+	
+	 <!-- 引入jdbc配置文件 -->    
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">    
+        <property name="locations">    
+            <list>    
+                <value>classpath*:jdbc.properties</value>    
+            </list>    
+        </property>    
+    </bean>   
+	
+	<bean id="mydataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${mall.jdbc.driverClassName}" />
+		<property name="jdbcUrl" value="${mall.jdbc.url}" />
+		<property name="user" value="${mall.jdbc.username}" />
+		<property name="password" value="${mall.jdbc.password}" />
+
+		<!-- 请在发布到生产环境时合理配置以下参数! -->
+		<!-- 最小连接数. Default: 3 -->
+		<property name="minPoolSize" value="10" />
+		<!-- 最大连接数. Default: 15 -->
+		<property name="maxPoolSize" value="20" />
+		<!-- 最大空闲时间, 30 (* 60秒) 分钟内未使用则连接被丢弃. 若为 0 则永不丢弃. Default: 0 -->
+		<property name="maxIdleTime" value="300" />
+		<!-- 当连接池中的连接耗尽的时候 c3p0 一次同时获取的连接数. Default: 3 -->
+		<property name="acquireIncrement" value="3" />
+		<!-- 最大 PreparedStatement 的数量. 如果 maxStatements 与 maxStatementsPerConnection均为 
+			0, 则表示缓存被关闭. Default: 0 -->
+		<property name="maxStatements" value="0" />
+		<!-- 初始化时的连接数, 应在 minPoolSize 与 maxPoolSize 之间. Default: 3 -->
+		<property name="initialPoolSize" value="10" />
+		<!-- 每隔 1 (* 60秒) 分钟检查所有连接池中的空闲连接. Default: 0 -->
+		<property name="idleConnectionTestPeriod" value="60" />
+		<!-- 从数据库获取新连接失败后重复尝试获取的次数. Default: 30 -->
+		<property name="acquireRetryAttempts" value="10" />
+		<!-- 两次连接中间隔时间, 单位毫秒. Default: 1000 -->
+		<property name="acquireRetryDelay" value="1000" />
+		<!-- 尝试获取连接失败后该数据源将申明已断开并永久关闭. Default: false -->
+		<property name="breakAfterAcquireFailure" value="false" />
+		<!-- 提交时校验连接的有效性. c3p0 官方不建议开启此值 [Use only if necessary. Expensive(仅在需要时用, 
+			否则会很昂贵)] Default: false -->
+		<property name="testConnectionOnCheckout" value="false" />
+		<!-- 获取连接时是否校验其有效性. Default: false -->
+		<property name="testConnectionOnCheckin" value="false" />
+	</bean>
+
+	<!-- Jdbc -->
+	<bean id="myjdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="mydataSource" />
+	</bean>
+	<!-- Jdbc -->
+	
+	<!-- 配置事务管理组件 -->
+	<bean id="mytransactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="mydataSource" />
+	</bean>
+
+	<!-- <tx:advice id="malltxAdvice" transaction-manager="malltransactionManager">
+		<tx:attributes>
+			<tx:method name="*TX" propagation="REQUIRED" />
+			<tx:method name="*" read-only="true" />
+		</tx:attributes>
+	</tx:advice> -->
+
+	<!-- <aop:config>
+		<aop:pointcut id="mallinterceptorPointCuts"
+			expression="execution(* com.sinovatech.sycm.service.mall.impl.*.*(..))" />
+		<aop:advisor advice-ref="malltxAdvice" pointcut-ref="mallinterceptorPointCuts" />
+	</aop:config> -->
+</beans>
